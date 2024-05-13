@@ -1,23 +1,39 @@
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-.container{
-height: 100vh;
-width: 100vw;
-display: flex;
-justify-content: center;
-align-items: center;
-}
-
-.board{
+.board {
     display: flex;
-   
-}
-
-button{
-    padding: 20px;
-}
-
+    flex-direction: column;
+    align-items: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  .board-row {
+    display: flex;
+  }
+  
+  .square {
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    border: 2px solid #ccc;
+    transition: background-color 0.3s ease;
+    padding: 0; /* Added to remove default button padding */
+  }
+  
+  .square:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .square:active {
+    background-color: #e0e0e0;
+  }
+  
+  .winner {
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  

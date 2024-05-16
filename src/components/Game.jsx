@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from "react";
 
 function Square({ value, onSquareClick }) {
   return (
@@ -15,9 +15,9 @@ function Board({ xIsNext, squares, onPlay }) {
     }
     const nextSquares = squares.slice();
     if (xIsNext) {
-      nextSquares[i] = 'X';
+      nextSquares[i] = "X";
     } else {
-      nextSquares[i] = 'O';
+      nextSquares[i] = "O";
     }
     onPlay(nextSquares);
   }
@@ -25,9 +25,11 @@ function Board({ xIsNext, squares, onPlay }) {
   const winner = calculateWinner(squares);
   let status;
   if (winner) {
-    status = 'Winner: ' + winner;
+    status = "Winner: " + winner;
+  } else if (squares.every((square) => square !== null)) {
+    status = "It's a draw!";
   } else {
-    status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+    status = "Next player: " + (xIsNext ? "X" : "O");
   }
 
   return (
@@ -52,27 +54,27 @@ function Board({ xIsNext, squares, onPlay }) {
   );
 }
 
-export default function Game() {
+function Game() {
   const [xIsNext, setXIsNext] = useState(true);
   const [history, setHistory] = useState([Array(9).fill(null)]);
-  const currentSquares = history[history.length - 1];
+  const [stepNumber, setStepNumber] = useState(0);
+
+  const currentSquares = history[stepNumber];
 
   function handlePlay(nextSquares) {
-    setHistory([...history, nextSquares]);
+    const newHistory = history.slice(0, stepNumber + 1);
+    setHistory([...newHistory, nextSquares]);
+    setStepNumber(newHistory.length);
     setXIsNext(!xIsNext);
   }
 
-  function jumpTo(nextMove) {
-    // TODO
+  function jumpTo(move) {
+    setStepNumber(move);
+    setXIsNext(move % 2 === 0);
   }
 
   const moves = history.map((squares, move) => {
-    let description;
-    if (move > 0) {
-      description = 'Go to move #' + move;
-    } else {
-      description = 'Go to game start';
-    }
+    const description = move ? `Go to move #${move}` : "Go to game start";
     return (
       <li key={move}>
         <button onClick={() => jumpTo(move)}>{description}</button>
@@ -112,3 +114,4 @@ function calculateWinner(squares) {
   return null;
 }
 
+export default Game;

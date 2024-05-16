@@ -1,13 +1,13 @@
-import React from 'react'
-import Board from './components/Board'
-import './App.css'
+import React from "react";
+import Game from "./components/Game.jsx";
+import "./App.css";
 
 const App = () => {
   return (
-    <div className='container'>
-      <Board/>
+    <div className="container">
+      <Game />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
